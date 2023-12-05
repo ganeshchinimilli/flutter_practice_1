@@ -44,57 +44,100 @@ class MyHomePage extends StatelessWidget{
         child: ListView(
           scrollDirection:Axis.vertical,
           shrinkWrap: true,
-          children:const  <Widget>[
+          children: <Widget>[
             ProductBox(
                name: "iPhone", 
                 description: "iPhone is the stylist phone ever", 
                 price: 1000, 
-                image: 'https://picsum.photos/250?image=9'
+                image: 'https://picsum.photos/250?image=9',
+                onPressed:(title){
+                   print(title);
+                  _showDialog(context,title);
+                }
             ),
              ProductBox( 
               name: "Pixel",    
               description: "Pixel is the most featureful phone ever", 
               price: 800, 
-              image: "https://picsum.photos/250?image=10"
+              image: "https://picsum.photos/250?image=10",
+              onPressed:(title){
+                  _showDialog(context,title);
+                }
             ), 
             ProductBox( 
               name: "Laptop", 
               description: "Laptop is most productive development tool", 
               price: 2000, 
-              image: "https://picsum.photos/250?image=11"
+              image: "https://picsum.photos/250?image=11",
+              onPressed:(title){
+                  _showDialog(context,title);
+                }
             ), 
             ProductBox( 
               name: "Tablet", 
               description: "Tablet is the most useful device ever for meeting", 
               price: 1500, 
-              image: "https://picsum.photos/250?image=12"
+              image: "https://picsum.photos/250?image=12",
+              onPressed:(title){
+                  _showDialog(context,title);
+                }
             ), 
             ProductBox( 
               name: "Pendrive", 
               description: "Pendrive is useful storage medium", 
               price: 100, 
-              image: "https://picsum.photos/250?image=13"
+              image: "https://picsum.photos/250?image=13",
+              onPressed:(title){
+                  _showDialog(context,title);
+                }
             ), 
             ProductBox(
               name: "Floppy Drive", 
               description: "Floppy drive is useful rescue storage medium", 
               price: 20, 
-              image: "https://picsum.photos/250?image=14"
+              image: "https://picsum.photos/250?image=14",
+               onPressed:(title){
+                  print(title);
+                  _showDialog(context,title);
+                }
             ), 
           ]
         )
       ),
     );
   }
+   void _showDialog(BuildContext context,String title){
+    showDialog(
+      context:context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          // make comment as title was added to cart
+          title:Text('Added to cart $title'),
+          // get the title as content from the product box
+          content:const Text('Congrats on adding the cart with title'),
+          actions: <Widget>[
+            TextButton( 
+              child:const Text('OK'),
+              onPressed: (){
+                Navigator.of(context).pop();
+              }
+            )
+          ]
+        );
+      }
+    );
+  }
+  
 }
 class ProductBox extends StatelessWidget{
-  const ProductBox({Key? key,required this.name,required this.description,required this.price,required this.image}):super(key:key);
+  const ProductBox({Key? key,required this.name,required this.description,required this.price,required this.image,required this.onPressed}):super(key:key);
 
   final String name;
   final String description;
   final int price;
   final String image;
-
+  final Function(String) onPressed;
+ 
   @override
   Widget build(BuildContext context){
     return Container(
@@ -113,26 +156,28 @@ class ProductBox extends StatelessWidget{
           mainAxisAlignment:MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             SizedBox(width:10),
+            // make some styling to the image
             Image.network(image,width:80),
             Expanded(
               child:Column(
                 mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(name,style:TextStyle(fontWeight:FontWeight.bold)),
-                  Text(description),
+                  Padding(
+                    padding:const EdgeInsets.only(left:8.0),
+                    child:Text(description,style:TextStyle(color:Color.fromARGB(137, 239, 236, 236))),
+                  ),
                   Text('Price : '+price.toString()),
                 ]
               )
             ),
-            IconButton(onPressed: (){}, icon:Icon(Icons.add_shopping_cart),color:Color.fromARGB(255, 180, 200, 216),)
+            IconButton(onPressed: (){
+              onPressed(name);}
+            , icon:Icon(Icons.add_shopping_cart),color:Color.fromARGB(255, 180, 200, 216),)
           ]
         ),
       )
-
-      
-
     );
-
 
     // return Container(
     //   padding:const EdgeInsets.all(2),
