@@ -127,7 +127,6 @@ class MyHomePage extends StatelessWidget{
       }
     );
   }
-  
 }
 class ProductBox extends StatelessWidget{
   const ProductBox({Key? key,required this.name,required this.description,required this.price,required this.image,required this.onPressed}):super(key:key);
@@ -149,31 +148,31 @@ class ProductBox extends StatelessWidget{
         color:Colors.blueAccent,
         shadowColor:Colors.red,
         elevation: 10,
-        shape:RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius:BorderRadius.all(Radius.circular(50)),
         ),
         child: Row(
           mainAxisAlignment:MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            SizedBox(width:10),
+            const SizedBox(width:10),
             // make some styling to the image
             Image.network(image,width:80),
             Expanded(
               child:Column(
                 mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(name,style:TextStyle(fontWeight:FontWeight.bold)),
+                  Text(name,style:const TextStyle(fontWeight:FontWeight.bold)),
                   Padding(
                     padding:const EdgeInsets.only(left:8.0),
-                    child:Text(description,style:TextStyle(color:Color.fromARGB(137, 239, 236, 236))),
+                    child:Text(description,style:const TextStyle(color:Color.fromARGB(137, 239, 236, 236))),
                   ),
-                  Text('Price : '+price.toString()),
+                  Text('Price : $price'),
                 ]
               )
             ),
             IconButton(onPressed: (){
               onPressed(name);}
-            , icon:Icon(Icons.add_shopping_cart),color:Color.fromARGB(255, 180, 200, 216),)
+            , icon:const Icon(Icons.add_shopping_cart),color:const Color.fromARGB(255, 180, 200, 216),)
           ]
         ),
       )
