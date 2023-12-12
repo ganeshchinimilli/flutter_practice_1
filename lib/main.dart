@@ -1,28 +1,11 @@
-import 'package:flutter/material.dart'; 
-import 'dart:async'; 
-import 'dart:convert'; 
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:http/http.dart' as http; 
-import 'Product.dart'; 
+import 'package:flutter/material.dart';
 
- List<Product> parseProducts(String responseBody) { 
-   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>(); 
-   return parsed.map<Product>((json) => Product.fromMap(json)).toList(); 
-} 
-Future<List<Product>> fetchProducts() async { 
-   final response = await http.get('http://192.168.1.2:8000/products.json'); 
-   if (response.statusCode == 200) { 
-      return parseProducts(response.body); 
-   } else { 
-      throw Exception('Unable to fetch products from the REST API'); 
-   } 
+void main() {
+  runApp(const MyApp());
 }
-void main() => runApp(MyApp(products: fetchProducts()));
-
 
 class MyApp extends StatelessWidget{
-  final Future<List<Product>> products; 
-  const MyApp({Key? key, required this.products}):super(key:key);
+  const MyApp({Key? key}):super(key:key);
 
   @override
   Widget build(BuildContext context){
@@ -34,50 +17,36 @@ class MyApp extends StatelessWidget{
       ),
       home:MyHomePage(
         title:'Product State demo home page',
-        products:products
       ),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget{
-  final Future<List<Product>> products; 
-  const MyHomePage({Key? key,required this.title,  required this.products}):super(key:key);
+  MyHomePage({Key? key,required this.title}):super(key:key);
 
   final String title;
-  // final items = Product.getProducts(); 
+  final items = Product.getProducts(); 
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
      appBar: AppBar(title: Text("Product Navigation")), 
-      // body: ListView.builder( 
-      //   itemCount: items.length, 
-      //   itemBuilder: (context, index) { 
-      //       return GestureDetector( 
-      //         child: ProductBox(item: items[index]), 
-      //         onTap: () { 
-      //             Navigator.push( 
-      //               context, 
-      //               MaterialPageRoute( 
-      //                   builder: (context) => ProductPage(item: items[index]), 
-      //               ), 
-      //             ); 
-      //         }, 
-      //       ); 
-      //   }, 
-      // )
-
-      body: Center(
-            child: FutureBuilder<List<Product>>(
-               future: products, builder: (context, snapshot) {
-                  if (snapshot.hasError) print(snapshot.error); 
-                  return snapshot.hasData ? ProductBoxList(items: snapshot.data) 
-                  
-                  // return the ListView widget : 
-                  Center(child: CircularProgressIndicator()); 
-               },
-            ),
+         body: ListView.builder( 
+            itemCount: items.length, 
+            itemBuilder: (context, index) { 
+               return GestureDetector( 
+                  child: ProductBox(item: items[index]), 
+                  onTap: () { 
+                     Navigator.push( 
+                        context, 
+                        MaterialPageRoute( 
+                           builder: (context) => ProductPage(item: items[index]), 
+                        ), 
+                     ); 
+                  }, 
+               ); 
+            }, 
          )
 
       // body:Center(
@@ -338,66 +307,44 @@ class ProductPage extends StatelessWidget{
     // );
   }
 }
-class ProductBoxList extends StatelessWidget { 
-   final List<Product> items;
-   ProductBoxList({Key? key, required this.items}); 
-   
-   @override 
-   Widget build(BuildContext context) {
-      return ListView.builder(
-         itemCount: items.length,
-         itemBuilder: (context, index) {
-            return GestureDetector(
-               child: ProductBox(item: items[index]), 
-               onTap: () {
-                  Navigator.push(
-                     context, MaterialPageRoute(
-                        builder: (context) => ProductPage(item: items[index]), 
-                     ), 
-                  ); 
-               }, 
-            ); 
-         }, 
-      ); 
-   } 
-}
-// class Product{
-//   final String name;
-//   final String description;
-//   final int price;
-//   final String image;
 
-//   Product(this.name, this.description,this.price,this.image);
+class Product{
+  final String name;
+  final String description;
+  final int price;
+  final String image;
+
+  Product(this.name, this.description,this.price,this.image);
   
-//   static List<Product> getProducts(){
-//     List<Product> items = <Product>[];
+  static List<Product> getProducts(){
+    List<Product> items = <Product>[];
 
-//     items.add(
-//       Product('iPhone', 'iPhone is the stylist phone ever',1000,'https://picsum.photos/250?image=9')
-//     );
+    items.add(
+      Product('iPhone', 'iPhone is the stylist phone ever',1000,'https://picsum.photos/250?image=9')
+    );
 
-//     items.add(
-//       Product('Pixel','Pixel is the most featureful phone ever',800,'https://picsum.photos/250?image=10')
-//     );
+    items.add(
+      Product('Pixel','Pixel is the most featureful phone ever',800,'https://picsum.photos/250?image=10')
+    );
 
-//     items.add(
-//       Product('Laptop','Laptop is most productive development tool',2000,'https://picsum.photos/250?image=11')
-//     );
+    items.add(
+      Product('Laptop','Laptop is most productive development tool',2000,'https://picsum.photos/250?image=11')
+    );
 
-//     items.add(
-//       Product('Tablet','Tablet is most productive development tool',1000,'https://picsum.photos/250?image=12')
-//     );
+    items.add(
+      Product('Tablet','Tablet is most productive development tool',1000,'https://picsum.photos/250?image=12')
+    );
 
-//     items.add(
-//       Product('Pendrive','Pendrive is useful storage medium',100,'https://picsum.photos/250?image=13')
-//     );
+    items.add(
+      Product('Pendrive','Pendrive is useful storage medium',100,'https://picsum.photos/250?image=13')
+    );
 
-//     items.add(
-//       Product('Floppy Drive','Floppy drive is useful rescue storage medium',20,'https://picsum.photos/250?image=14')
-//     );
-//     return items;
-//   }
-// }
+    items.add(
+      Product('Floppy Drive','Floppy drive is useful rescue storage medium',20,'https://picsum.photos/250?image=14')
+    );
+    return items;
+  }
+}
 class RatingBox extends StatefulWidget{
   const RatingBox({Key?key}):super(key:key);
 
