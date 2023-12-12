@@ -1,0 +1,38 @@
+[
+    {
+        "name": "iPhone",
+        "description": "iPhone",
+        "price": 100,
+        "image":"https://example.com/iphone.png"
+    },
+    {
+        "name": "iPad",
+        "description": "iPad",
+        "price": 200,
+        "image":"https://example.com/ipad.png"
+    },
+    {
+        "name": "MacBook",
+        "description": "MacBook",
+        "price": 300,
+        "image":"https://example.com/macbook.png"
+    },
+    {
+        "name": "AirPods",
+        "description": "AirPods",
+        "price": 400,
+        "image":"https://example.com/airpods.png"
+    },
+    {
+        "name": "Watch",
+        "description": "Watch",
+        "price": 500,
+        "image":"https://example.com/watch.png"
+    },
+    {
+        "name": "iMac",
+        "description": "iMac",
+        "price": 600,
+        "image":"https://example.com/imac.png"
+    }
+]
